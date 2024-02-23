@@ -75,6 +75,29 @@ def iso_secp256k1():
     _iso_secp256k1 = iso
     return iso
 
+
+_iso_bn254 = None
+def iso_bn254():
+    global _iso_bn254
+    if _iso_bn254 is not None:
+        return _iso_bn254
+    p = 21888242871839275222246405745257275088696311157297823662689037894645226208583
+    A = 0
+    B = 3
+    E = EllipticCurve(GF(p), [A, B])
+    #for iso in E.isogenies_prime_degree(59):
+    #    print(iso)
+    #    print("\n")
+    # curve isogenous to bn254
+    Ap = 9087994317191712533568698403530528306233527979934880849865820425505218365052
+    Bp = 3059101143800926337153883959975852125336293569895750485959800095292563537400
+    Ep = EllipticCurve(GF(p), [Ap, Bp])
+    iso = EllipticCurveIsogeny(E=E, kernel=None, codomain=Ep, degree=59).dual()
+    if (- iso.rational_maps()[1])(1, 1) > iso.rational_maps()[1](1, 1):
+        iso.switch_sign()
+    _iso_bn254 = iso
+    return iso
+
 # BLS12-381 G1 iso
 _iso_bls12381g1 = None
 def iso_bls12381g1():
