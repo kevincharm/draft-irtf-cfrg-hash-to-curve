@@ -145,3 +145,5 @@ if __name__ == "__main__":
     show_iso(iso_bls12381g1())
     print("** BLS12-381 G2\n")
     show_iso(iso_bls12381g2())
+    print("** BN254\n")
+    show_iso(iso_bn254())
